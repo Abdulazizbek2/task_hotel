@@ -1,6 +1,7 @@
 part of 'theme.dart';
 
 class IconSet {
+  final String superPr;
   final String smileIcon;
   final String completeIcon;
   final String cancelIcon;
@@ -54,6 +55,7 @@ class IconSet {
   final String fullWeather;
 
   IconSet._({
+    required this.superPr,
     required this.smileIcon,
     required this.completeIcon,
     required this.cancelIcon,
@@ -104,6 +106,7 @@ class IconSet {
 
   static IconSet get create {
     return IconSet._(
+      superPr: 'assets/icons/svg/super_pr.svg',
       smileIcon: 'assets/icons/svg/smile_ic.svg',
       completeIcon: 'assets/icons/svg/complete_ic.svg',
       cancelIcon: 'assets/icons/svg/cancel_ic.svg',

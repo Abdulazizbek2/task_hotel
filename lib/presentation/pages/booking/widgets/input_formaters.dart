@@ -37,7 +37,7 @@ class DateInputFormater extends TextInputFormatter {
   String internationalPhoneFormat(value) {
     String nums = value.replaceAll(RegExp(r'[\D]'), '');
     String internationalPhoneFormatted = nums.isNotEmpty
-        ? '${nums.substring(0, nums.isNotEmpty ? 4 : null)}${nums.length > 4 ? '.' : ''}${nums.substring(4, nums.length >= 6 ? 6 : null)}${nums.length > 6 ? '.' : ''}${nums.length > 6 ? nums.substring(6, nums.length >= 8 ? 8 : null) : ''}'
+        ? '${nums.substring(0, nums.isNotEmpty ? 2 : null)}${nums.length > 2 ? '.' : ''}${nums.substring(4, nums.length >= 4 ? 4 : null)}${nums.length > 4 ? '.' : ''}${nums.length > 4 ? nums.substring(4, nums.length >= 6 ? 6 : null) : ''}'
         : nums;
     return internationalPhoneFormatted;
   }

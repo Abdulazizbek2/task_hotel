@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_hotel/presentation/component/custom_button.dart';
 import 'package:task_hotel/presentation/styles/theme.dart';
@@ -21,69 +22,70 @@ class _PaidPageState extends State<PaidPage> {
 
   @override
   Widget build(BuildContext context) {
-    final moneyFormat = NumberFormat("#,##0");
     return ThemeWrapper(
       builder: (BuildContext ctx, CustomColorSet colors, FontSet fonts,
           IconSet icons, GridTheme _) {
         return Scaffold(
-          backgroundColor: colors.backgroundColor,
+          backgroundColor: colors.white,
           appBar: AppBar(
             // foregroundColor: colors.white,
             backgroundColor: colors.white,
             surfaceTintColor: colors.white,
             title: Text(
-              "",
+              "order_has_been_paid".tr(),
               style: TextStyle(
                   color: colors.black,
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500),
             ),
             centerTitle: true,
           ),
-          body: Column(
-            children: [
-              SizedBox(
-                height: 8.h,
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                    left: 16.w, right: 16.w, bottom: 16.h, top: 5.h),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(12.h)),
-                    color: colors.white),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Text(
-                      "",
-                      style: GoogleFonts.roboto(
-                        color: colors.black,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      "",
-                      style: TextStyle(
-                          color: colors.blueText,
-                          wordSpacing: -2,
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    //descrioption
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                  ],
+          body: Container(
+            padding: EdgeInsets.only(left: 23.w, right: 23.w),
+            height: double.infinity,
+            width: double.infinity,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Spacer(
+                  flex: 2,
                 ),
-              ),
-            ],
+                Container(
+                    height: 94.h,
+                    width: 94.w,
+                    decoration: BoxDecoration(
+                        color: colors.backgroundColor,
+                        borderRadius: BorderRadius.circular(47.h)),
+                    child: SvgPicture.asset(icons.superPr)),
+                SizedBox(
+                  height: 32.h,
+                ),
+                Text(
+                  "order_has_been_processed".tr(),
+                  style: GoogleFonts.roboto(
+                    color: colors.black,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Text(
+                  "order_text".tr(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: colors.grey2Text,
+                      wordSpacing: 0,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400),
+                ),
+                const Spacer(
+                  flex: 4,
+                ),
+              ],
+            ),
           ),
           bottomSheet: Container(
             padding: EdgeInsets.only(
@@ -96,7 +98,7 @@ class _PaidPageState extends State<PaidPage> {
               onPressed: () {
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
-              title: "to_room_selection".tr(),
+              title: "super".tr(),
               backgroundColor: colors.coursorColor,
             ),
           ),

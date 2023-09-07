@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_hotel/application/home/home_bloc.dart';
 import 'package:task_hotel/presentation/component/custom_button.dart';
 import 'package:task_hotel/presentation/pages/booking/widgets/input_formaters.dart';
+import 'package:task_hotel/presentation/pages/booking/widgets/tablet_text_item.dart';
+import 'package:task_hotel/presentation/pages/booking/widgets/user_input_data_widget.dart';
 import 'package:task_hotel/presentation/styles/theme.dart';
 import 'package:task_hotel/presentation/styles/theme_wrapper.dart';
 import '../../routes/routes.dart';
@@ -25,34 +26,30 @@ class _BookingPageState extends State<BookingPage> {
     super.initState();
     emailController = TextEditingController();
     phoneController = TextEditingController();
-    nameController = TextEditingController();
-    surnameController = TextEditingController();
-    dateBirthController = TextEditingController();
-    citizenshipController = TextEditingController();
-    passportNumberController = TextEditingController();
-    passportValidityPeriodController = TextEditingController();
+    touristLeng = 2;
+    listControllers = List.generate(
+        10, (index) => List.generate(6, (index) => TextEditingController()));
   }
+
+  late int touristLeng;
+  late List<List<TextEditingController>> listControllers;
 
   late TextEditingController emailController;
   late TextEditingController phoneController;
-  late TextEditingController nameController;
-  late TextEditingController surnameController;
-  late TextEditingController dateBirthController;
-  late TextEditingController citizenshipController;
-  late TextEditingController passportNumberController;
-  late TextEditingController passportValidityPeriodController;
-
   final _mobileFormatter = InternationalPhoneFormatter();
-  final _dateFormatter = DateInputFormater();
+
+  String totalPrice = "";
 
   @override
   Widget build(BuildContext context) {
-    // final moneyFormat = NumberFormat("#,##0");
+    final moneyFormat = NumberFormat("#,##0");
     return ThemeWrapper(
       builder: (BuildContext ctx, CustomColorSet colors, FontSet fonts,
           IconSet icons, GridTheme _) {
         return BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
+            totalPrice =
+                "${moneyFormat.format((state.bookingHotelModel?.serviceCharge ?? 0) + (state.bookingHotelModel?.fuelCharge ?? 0) + (state.bookingHotelModel?.tourPrice ?? 0))} ₽";
             return Scaffold(
               backgroundColor: colors.backgroundColor,
               appBar: AppBar(
@@ -245,7 +242,7 @@ class _BookingPageState extends State<BookingPage> {
                               Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.h),
-                                    color: colors.lightGrey),
+                                    color: colors.greyTextField),
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16.w, vertical: 0.h),
                                 child: TextFormField(
@@ -281,189 +278,64 @@ class _BookingPageState extends State<BookingPage> {
                     SizedBox(
                       height: 8.h,
                     ),
+                    for (int i = 0; i < touristLeng; i++)
+                      UserInputDataWidget(
+                          numberUser: i + 1,
+                          colors: colors,
+                          nameController: listControllers[i][0],
+                          surnameController: listControllers[i][1],
+                          dateBirthController: listControllers[i][2],
+                          citizenshipController: listControllers[i][3],
+                          passportNumberController: listControllers[i][4],
+                          passportValidityPeriodController: listControllers[i]
+                              [5]),
                     Container(
-                        padding: EdgeInsets.only(
-                            left: 16.w, right: 16.w, bottom: 3.h, top: 16.h),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.h),
-                            color: colors.white),
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "1_touris".tr(),
-                                    style: GoogleFonts.roboto(
-                                      color: colors.black,
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 14.h,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.h),
-                                    color: colors.greyTextField),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 0.h),
-                                child: TextFormField(
-                                  controller: nameController,
-                                  cursorColor: colors.black,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    labelStyle: GoogleFonts.roboto(
-                                        color: colors.grey2Text),
-                                    labelText: 'name'.tr(),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.h),
-                                    color: colors.greyTextField),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 0.h),
-                                child: TextFormField(
-                                  controller: surnameController,
-                                  cursorColor: colors.black,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    labelStyle: GoogleFonts.roboto(
-                                        color: colors.grey2Text),
-                                    labelText: 'surname'.tr(),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.h),
-                                    color: colors.greyTextField),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 0.h),
-                                child: TextFormField(
-                                  controller: dateBirthController,
-                                  cursorColor: colors.black,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    labelStyle: GoogleFonts.roboto(
-                                        color: colors.grey2Text),
-                                    labelText: 'date_birth'.tr(),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.h),
-                                    color: colors.greyTextField),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 0.h),
-                                child: TextFormField(
-                                  controller: citizenshipController,
-                                  cursorColor: colors.black,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    labelStyle: GoogleFonts.roboto(
-                                        color: colors.grey2Text),
-                                    labelText: 'citizenship'.tr(),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.h),
-                                    color: colors.greyTextField),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 0.h),
-                                child: TextFormField(
-                                  controller: passportNumberController,
-                                  cursorColor: colors.black,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    labelStyle: GoogleFonts.roboto(
-                                        color: colors.grey2Text),
-                                    labelText: 'passport_number'.tr(),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.h),
-                                    color: colors.greyTextField),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 0.h),
-                                child: TextFormField(
-                                  inputFormatters: [_dateFormatter],
-                                  controller: passportValidityPeriodController,
-                                  keyboardType: TextInputType.number,
-                                  cursorColor: colors.black,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    labelStyle: GoogleFonts.roboto(
-                                        color: colors.grey2Text),
-                                    labelText: 'passport_validity_period'.tr(),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.h),
-                                    color: colors.lightGrey),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 0.h),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.emailAddress,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: (input) => input!.isValidEmail()
-                                      ? null
-                                      : "check_email".tr(),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    labelStyle: GoogleFonts.roboto(
-                                        color: colors.grey2Text),
-                                    labelText: 'email'.tr(),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              Text(
-                                "confidentInfo".tr(),
-                                style: TextStyle(
-                                    color: colors.grey2Text,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              SizedBox(
-                                height: 16.h,
-                              ),
-                            ])),
+                      padding: EdgeInsets.only(
+                          left: 16.w, right: 16.w, bottom: 16.h, top: 16.h),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.h),
+                          color: colors.white),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TableTextItem2(
+                            name: "tour".tr(),
+                            value:
+                                "${moneyFormat.format(state.bookingHotelModel?.tourPrice ?? 0)} ₽",
+                            colors: colors,
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          TableTextItem2(
+                            name: "fuel_surcharge".tr(),
+                            value:
+                                "${moneyFormat.format(state.bookingHotelModel?.fuelCharge ?? 0)} ₽",
+                            colors: colors,
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          TableTextItem2(
+                            name: "service_surcharge".tr(),
+                            value:
+                                "${moneyFormat.format(state.bookingHotelModel?.serviceCharge ?? 0)} ₽",
+                            colors: colors,
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          TableTextItem2(
+                            isTotal: true,
+                            name: "total_p".tr(),
+                            value: totalPrice,
+                            colors: colors,
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: 106.h,
                     ),
@@ -482,7 +354,7 @@ class _BookingPageState extends State<BookingPage> {
                   onPressed: () {
                     Navigator.of(context).push(AppRoutes.paidPage());
                   },
-                  title: "to_room_selection".tr(),
+                  title: "pay".tr() + totalPrice,
                   backgroundColor: colors.coursorColor,
                 ),
               ),
@@ -490,47 +362,6 @@ class _BookingPageState extends State<BookingPage> {
           },
         );
       },
-    );
-  }
-}
-
-class TableTextItem extends StatelessWidget {
-  final String name;
-  final String value;
-  final CustomColorSet colors;
-  const TableTextItem({
-    super.key,
-    required this.name,
-    required this.value,
-    required this.colors,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 140.w,
-          child: Text(
-            name,
-            style: GoogleFonts.roboto(
-              color: colors.grey2Text,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: TextStyle(
-                color: colors.black,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400),
-          ),
-        ),
-      ],
     );
   }
 }
