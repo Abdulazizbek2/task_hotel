@@ -28,7 +28,7 @@ class InternationalPhoneFormatter extends TextInputFormatter {
 extension EmailValidator on String {
   bool isValidEmail() {
     return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+            r'^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$')
         .hasMatch(this);
   }
 }
@@ -37,7 +37,7 @@ class DateInputFormater extends TextInputFormatter {
   String internationalPhoneFormat(value) {
     String nums = value.replaceAll(RegExp(r'[\D]'), '');
     String internationalPhoneFormatted = nums.isNotEmpty
-        ? '${nums.substring(0, nums.isNotEmpty ? 2 : null)}${nums.length > 2 ? '.' : ''}${nums.substring(4, nums.length >= 4 ? 4 : null)}${nums.length > 4 ? '.' : ''}${nums.length > 4 ? nums.substring(4, nums.length >= 6 ? 6 : null) : ''}'
+        ? '${nums.substring(0, nums.isNotEmpty ? 2 : null)}${nums.length > 2 ? '.' : ''}${nums.substring(2, nums.length >= 4 ? 4 : null)}${nums.length > 4 ? '.' : ''}${nums.length > 4 ? nums.substring(4, nums.length >= 8 ? 8 : null) : ''}'
         : nums;
     return internationalPhoneFormatted;
   }

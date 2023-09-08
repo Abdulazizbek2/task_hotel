@@ -61,7 +61,7 @@ class Style {
 
   static const Color linkText = Color(0xFF0066CC);
   static const Color dark = Color(0xff1D1D1D);
-  static const Color red = Color(0xffE50029);
+  static const Color red = Color(0xffEB5757);
   static const Color grey = Color(0xffAFAFAF);
 
   static const Color grey1 = Color(0xff959189);
