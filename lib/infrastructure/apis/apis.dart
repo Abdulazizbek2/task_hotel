@@ -10,7 +10,6 @@ import '../models/image_upload/image_upload.dart';
 
 part 'apis.chopper.dart';
 
-const String baseUrlPlatina = "https://cp.dev.platina.uz";
 const String baseUrl = "https://run.mocky.io";
 
 /// hotel services

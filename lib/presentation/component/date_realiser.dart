@@ -2,8 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 
-import '../../infrastructure/apis/apis.dart';
-
 String getDate(String? date) {
   var dateF = DateTime.parse(date ?? "2021-09-09T12:00:00.000000Z");
   var howTimeWas = DateTime.parse(date ?? "2021-09-09T12:00:00.000000Z")
@@ -55,11 +53,11 @@ String toMonth(int i) {
   }
 }
 
-String getImageFullUrl(String? image) {
-  return image != null
-      ? (baseUrlPlatina + image)
-      : "https://platina.uz/_ipx/w_820/https://cp.platina.uz//media/CACHE/images/cca37e89330ce7e2df3ddfbd726d7012-1024x682.0f14ed88d864.webp";
-}
+// String getImageFullUrl(String? image) {
+//   return image != null
+//       // ? (baseUrlPlatina + image)
+//       : "https://platina.uz/_ipx/w_820/https://cp.platina.uz//media/CACHE/images/cca37e89330ce7e2df3ddfbd726d7012-1024x682.0f14ed88d864.webp";
+// }
 
 extension HexColor on Color {
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
