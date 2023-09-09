@@ -17,6 +17,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   final bool? autoLeading;
   final Color? color;
   final bool? isBorder;
+  final double? height;
 
   const AppBarComponent({
     Key? key,
@@ -28,6 +29,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
     this.isBorder,
     this.autoLeading,
     this.profilePicPath = '',
+    this.height,
   }) : super(key: key);
 
   @override
