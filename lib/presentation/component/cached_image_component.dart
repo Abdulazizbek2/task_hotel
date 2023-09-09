@@ -11,9 +11,11 @@ class CachedImageComponent extends StatelessWidget {
   final String imageUrl;
   final double borderRadius;
   final double borderWidth;
+  final double padding;
 
   const CachedImageComponent({
     Key? key,
+    required this.padding,
     required this.height,
     required this.width,
     required this.imageUrl,

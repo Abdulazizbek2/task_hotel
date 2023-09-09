@@ -59,6 +59,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
                         width: profilePicPath.isNotEmpty ? 30.r : 0,
                         child: profilePicPath.isNotEmpty
                             ? CachedImageComponent(
+                                padding: 20,
                                 height: 30.r,
                                 width: 30.r,
                                 borderRadius: 6.r,
